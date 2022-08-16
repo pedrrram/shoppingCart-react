@@ -1,11 +1,9 @@
 export interface IProduct {
   id: number;
-  sku: number;
-  title: string;
-  quantity: number;
-  description: string;
-  availableSizes: string[];
-  style?: string;
+  name: string;
+  description: object[];
   price: number;
-  isFreeShipping: boolean;
+  offPrice: number;
+  discount: number;
+  image: string;
 }

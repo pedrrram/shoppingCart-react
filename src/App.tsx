@@ -7,7 +7,7 @@ interface AppProps {}
 
 const App: FC<AppProps> = () => {
   return (
-    <div className='text-slate-900'>
+    <div className='text-slate-900 bg-sky-50 h-full min-h-screen'>
       <Routes>
         <Route path='/' element={<Home />}/>
         <Route path='/cart' element={<Cart />}/>
