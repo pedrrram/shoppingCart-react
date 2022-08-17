@@ -7,8 +7,9 @@ import { useCart } from '../providers/cart/CartProvider';
 interface CartProps {}
 
 const Cart: FC<CartProps> = () => {
-  const { cart, dispatch } = useCart();
-  const { total, products } = cart;
+  const {
+    cart: { products },
+  } = useCart();
 
   return (
     <Layout>

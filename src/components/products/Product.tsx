@@ -9,7 +9,7 @@ interface ProductProps {
 }
 
 const Product: FC<ProductProps> = ({ product }) => {
-  const { cart, dispatch } = useCart();
+  const { dispatch } = useCart();
 
   const addProductHandler = (product: IProduct) => {
     dispatch({ type: CartActionType.ADD_TO_CART, payload: product });
