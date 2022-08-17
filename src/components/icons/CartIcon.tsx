@@ -1,13 +1,13 @@
 const CartIcon = (props: any) => {
   return (
     <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      className="h-7 w-7 cursor-pointer"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      strokeWidth={2}
+    xmlns="http://www.w3.org/2000/svg"
+    className="h-7 w-7 cursor-pointer"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    strokeWidth={2}
+    {...props}
     >
       <path
         strokeLinecap="round"
