@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useCart } from '../../providers/cart/CartProvider';
 import { CartActionType } from '../../types/Cart';
 import { IProduct } from '../../types/IProduct';
@@ -11,6 +12,7 @@ interface ProductProps {
 }
 
 const Product: FC<ProductProps> = ({ product }) => {
+  const navigate = useNavigate();
   const { cart, dispatch } = useCart();
 
   const addProductHandler = (product: IProduct) => {
@@ -30,13 +32,16 @@ const Product: FC<ProductProps> = ({ product }) => {
           <p>{product.name}</p>
           <p>${product.price}</p>
         </div>
-        <div onClick={() => addProductHandler(product)}>
+        <div>
           {isInCart(cart, product) ? (
-            <span className="bg-sky-200 text-slate-900 px-3 py-2 rounded-xl cursor-pointer text-base flex items-center">
+            <span
+              onClick={() => navigate('/cart')}
+              className="bg-sky-200 text-slate-900 px-3 py-2 rounded-xl cursor-pointer text-base flex items-center"
+            >
               Check Cart <CartIcon className="h-5 w-5 cursor-pointer ml-2" />
             </span>
           ) : (
-            <AddIcon />
+            <AddIcon onClick={() => addProductHandler(product)} />
           )}
         </div>
       </div>

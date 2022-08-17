@@ -17,11 +17,13 @@ const Header: FC<HeaderProps> = () => {
   let [itemsNumber, setItemsNumber] = useState<number>(0);
   const cartCounting = () => {
     setItemsNumber(0);
-    products.forEach((pr) => setItemsNumber(itemsNumber => (itemsNumber += pr.quantity)));
+    products.forEach((pr) =>
+      setItemsNumber((itemsNumber) => (itemsNumber += pr.quantity))
+    );
   };
 
   useEffect(() => {
-    cartCounting()
+    cartCounting();
   }, [products]);
 
   return (
