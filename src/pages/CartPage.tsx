@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import CartSummary from '../components/cart/CartSummary';
 import ProductItem from '../components/cart/ProductItem';
 import Layout from '../components/layout/Layout';
 import { useCart } from '../providers/cart/CartProvider';
@@ -19,12 +20,10 @@ const Cart: FC<CartProps> = () => {
                 Cart
               </section>
               {products.map((product) => (
-                <ProductItem product={product} />
+                <ProductItem key={product.id} product={product} />
               ))}
             </section>
-            <section className="sm:col-span-2 shadow-2xl bg-sky-100 rounded-lg max-h-[620px]">
-              cart summary
-            </section>
+            <CartSummary />
           </section>
         ) : (
           <h3 className="text-4xl font-thin">Cart is empty :(</h3>

@@ -10,7 +10,7 @@ interface ProductItemProps {
 
 const ProductItem: FC<ProductItemProps> = ({ product }) => {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 py-3 px-5 gap-4 grid-flow-col justify-items-center border-b border-slate-300">
+    <div className="grid grid-cols-2 md:grid-cols-3 py-3 px-5 gap-4 grid-flow-col justify-items-center border-b-2 last:border-none border-slate-300 border-dashed items-center">
       <div className="h-36 w-36 sm:w-44 bg-white rounded-2xl">
         <img
           src={product.image}
