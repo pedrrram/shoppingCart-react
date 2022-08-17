@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { toast } from 'react-toastify';
 import { useCart } from '../../providers/cart/CartProvider';
 import { CartActionType } from '../../types/Cart';
 import { IProduct } from '../../types/IProduct';
@@ -17,7 +18,13 @@ const ProductItem: FC<ProductItemProps> = ({ product }) => {
     dispatch({ type: CartActionType.ADD_TO_CART, payload: product });
   };
   const decrementHandler = (product: IProduct) => {
-    dispatch({type: CartActionType.REMOVE_PRODUCT, payload: product})
+    dispatch({ type: CartActionType.REMOVE_PRODUCT, payload: product });
+  };
+  const removeHandler = (product: IProduct) => {
+    dispatch({ type: CartActionType.REMOVE_PRODUCT, payload: product });
+    toast.error(`${product.name} Removed from Cart!`, {
+      icon: () => <RemoveIcon className="text-rose-600" />,
+    });
   };
 
   return (
@@ -33,8 +40,12 @@ const ProductItem: FC<ProductItemProps> = ({ product }) => {
         <span className="font-bold">{product.name}</span>
         <span>Price: ${product.price * product.quantity}</span>
         <div className="flex items-center col-start-2 bg-sky-100 justify-between w-fit space-x-5 px-3 py-2 rounded-lg mt-5">
-          <div onClick={() => decrementHandler(product)}>
-          {product.quantity === 1 ? <RemoveIcon /> : <MinusIcon />}
+          <div>
+            {product.quantity === 1 ? (
+              <RemoveIcon onClick={() => removeHandler(product)} />
+            ) : (
+              <MinusIcon onClick={() => decrementHandler(product)} />
+            )}
           </div>
           <span>{product.quantity}</span>
           <PlusIcon onClick={() => incrementHandler(product)} />

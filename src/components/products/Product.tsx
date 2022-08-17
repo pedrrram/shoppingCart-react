@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { useCart } from '../../providers/cart/CartProvider';
 import { CartActionType } from '../../types/Cart';
 import { IProduct } from '../../types/IProduct';
@@ -17,6 +18,10 @@ const Product: FC<ProductProps> = ({ product }) => {
 
   const addProductHandler = (product: IProduct) => {
     dispatch({ type: CartActionType.ADD_TO_CART, payload: product });
+    toast.success(`${product.name} Added to Cart!`, {
+      icon: () => <CartIcon className="text-sky-600" />,
+      onClick: () => navigate('/cart'),
+    });
   };
 
   return (
