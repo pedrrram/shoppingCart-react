@@ -13,6 +13,7 @@ export const products: IProduct[] = [
     offPrice: 120,
     discount: 0,
     image: 'https://m.media-amazon.com/images/I/81u+baLFsOS._AC_UX695_.jpg',
+    quantity: 0,
   },
   {
     id: 2,
@@ -23,6 +24,7 @@ export const products: IProduct[] = [
     discount: 8,
     image:
       'https://m.media-amazon.com/images/I/71gClWl4NuL._AC_SX695._SX._UX._SY._UY_.jpg',
+    quantity: 0,
   },
   {
     id: 3,
@@ -37,6 +39,7 @@ export const products: IProduct[] = [
     discount: 10,
     image:
       'https://m.media-amazon.com/images/I/71MsbhoDUkL._AC_SY695._SX._UX._SY._UY_.jpg',
+    quantity: 0,
   },
   {
     id: 4,
@@ -51,6 +54,7 @@ export const products: IProduct[] = [
     discount: 15,
     image:
       'https://m.media-amazon.com/images/I/81g0MiOqwAL._AC_SX695._SX._UX._SY._UY_.jpg',
+    quantity: 0,
   },
   {
     id: 5,
@@ -65,6 +69,7 @@ export const products: IProduct[] = [
     discount: 0,
     image:
       'https://m.media-amazon.com/images/I/81QOp+4+MfL._AC_SX695._SX._UX._SY._UY_.jpg',
+    quantity: 0,
   },
   {
     id: 6,
@@ -79,5 +84,6 @@ export const products: IProduct[] = [
     discount: 13,
     image:
       'https://m.media-amazon.com/images/I/61AcVWy+21L._AC_SY695._SX._UX._SY._UY_.jpg',
+    quantity: 0,
   },
 ];

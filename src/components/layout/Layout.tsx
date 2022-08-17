@@ -1,5 +1,5 @@
 import React, { FC, ReactNode } from 'react';
-import Navigation from '../navigation/Navigation';
+import Header from './header/Header';
 
 interface LayoutProps {
   children?: ReactNode;
@@ -8,8 +8,8 @@ interface LayoutProps {
 const Layout: FC<LayoutProps> = ({ children }) => {
   return (
     <div>
-      <Navigation />
-      {children}
+      <Header />
+      <main className="py-10 px-5">{children}</main>
     </div>
   );
 };
