@@ -1,12 +1,29 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+
+import Navigation from '../navigation/Navigation';
+import { useCart } from '../../../providers/cart/CartProvider';
 import CartIcon from '../../icons/CartIcon';
 import HeartIcon from '../../icons/HeartIcon';
 import UserIcon from '../../icons/UserIcon';
-import Navigation from '../navigation/Navigation';
 
 interface HeaderProps {}
 
 const Header: FC<HeaderProps> = () => {
+  const {
+    cart: { products },
+  } = useCart();
+
+  let [itemsNumber, setItemsNumber] = useState<number>(0);
+  const cartCounting = () => {
+    setItemsNumber(0);
+    products.forEach((pr) => setItemsNumber(itemsNumber => (itemsNumber += pr.quantity)));
+  };
+
+  useEffect(() => {
+    cartCounting()
+  }, [products]);
+
   return (
     <header className="w-full bg-sky-100 h-auto py-5 sm:py-0 sm:h-24 flex items-center justify-center">
       <section className="container max-w-7xl mx-auto px-5 xl:px-0">
@@ -15,7 +32,16 @@ const Header: FC<HeaderProps> = () => {
           <Navigation />
           <div className="flex items-center space-x-5">
             <UserIcon />
-            <CartIcon />
+            <Link to="/cart">
+              <div className="relative">
+                {itemsNumber > 0 && (
+                  <div className="inline-flex absolute -top-3 -right-3 justify-center items-center w-6 h-6 text-xs font-bold text-white bg-sky-500 rounded-full border-2 border-slate-900">
+                    <span>{itemsNumber}</span>
+                  </div>
+                )}
+                <CartIcon />
+              </div>
+            </Link>
             <HeartIcon />
           </div>
         </div>
