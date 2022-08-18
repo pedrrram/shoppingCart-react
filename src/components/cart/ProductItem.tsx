@@ -43,8 +43,8 @@ const ProductItem: FC<ProductItemProps> = ({ product }) => {
           <span
             className={`${
               product.discount > 0
-                ? 'line-through decoration-rose-600 decoration-2 mr-3 text-rose-600'
-                : ''
+                ? 'line-through decoration-rose-600 decoration-2 ml-2 mr-3 text-rose-600'
+                : 'ml-2'
             }`}
           >
             ${product.price * product.quantity}

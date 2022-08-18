@@ -36,7 +36,7 @@ const CartSummary: FC<CartSummaryProps> = () => {
           <span className="ml-3 font-bold text-xl">${discountedTotal}</span>
         </p>
         <Link to="/checkout">
-          <button className="bg-sky-600 text-white py-3 rounded-xl mt-5 font-medium">
+          <button className="bg-sky-600 text-white py-3 rounded-xl mt-5 font-medium w-full">
             Checkout
           </button>
         </Link>
