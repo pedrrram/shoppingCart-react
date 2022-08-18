@@ -1,12 +1,19 @@
 import { FC } from 'react';
+import { Link } from 'react-router-dom';
 import { useCart } from '../../providers/cart/CartProvider';
 
 interface CartSummaryProps {}
 
 const CartSummary: FC<CartSummaryProps> = () => {
   const {
-    cart: { total },
+    cart: { products, total },
   } = useCart();
+
+  const discountedTotal: number = products.reduce(
+    (sum, pr) => sum + pr.offPrice * pr.quantity,
+    0
+  );
+
   return (
     <section className="sm:col-span-2 shadow-2xl bg-sky-100 rounded-2xl max-h-[440px] overflow-hidden">
       <div className="py-4 px-6 pb-3 border-b-2 border-dashed border-slate-500">
@@ -18,24 +25,21 @@ const CartSummary: FC<CartSummaryProps> = () => {
             Subtotal: <span className="ml-3 font-semibold">${total}</span>
           </p>
           <p>
-            Shpping:{' '}
+            Discount:
             <span className="ml-3 font-semibold">
-              ${(total * 0.03).toFixed(2)}
+              ${total - discountedTotal}
             </span>
           </p>
         </div>
         <p className="font-medium text-2xl py-3">
-          Total
-          <span className="text-base">
-            (tax inclueded):
-            <span className="ml-3 font-bold text-xl">
-              ${(total + total * 0.03).toFixed(2)}
-            </span>
-          </span>
+          Total:
+          <span className="ml-3 font-bold text-xl">${discountedTotal}</span>
         </p>
-        <button className="bg-sky-600 text-white py-3 rounded-xl mt-5 font-medium">
-          Checkout
-        </button>
+        <Link to="/checkout">
+          <button className="bg-sky-600 text-white py-3 rounded-xl mt-5 font-medium">
+            Checkout
+          </button>
+        </Link>
         <span className="text-sky-600 text-base mt-2 font-medium cursor-pointer">
           I Have a Coupon
         </span>

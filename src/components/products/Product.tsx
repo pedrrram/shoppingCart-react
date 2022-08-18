@@ -35,7 +35,19 @@ const Product: FC<ProductProps> = ({ product }) => {
       <div className="py-3 px-5 font-light text-lg flex items-center justify-between">
         <div>
           <p>{product.name}</p>
-          <p>${product.price}</p>
+          <p>
+            Price:
+            <span
+              className={`${
+                product.discount > 0
+                  ? 'line-through decoration-rose-600 decoration-2 mr-3 text-rose-600'
+                  : ''
+              }`}
+            >
+              ${product.price}
+            </span>
+            {product.discount > 0 && <span>${product.offPrice}</span>}
+          </p>
         </div>
         <div>
           {isInCart(cart, product) ? (

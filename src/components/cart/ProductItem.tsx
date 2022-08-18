@@ -38,7 +38,21 @@ const ProductItem: FC<ProductItemProps> = ({ product }) => {
       </div>
       <div className="col-start-2 col-span-2 py-5 text-xl font-light flex flex-col justify-self-start">
         <span className="font-bold">{product.name}</span>
-        <span>Price: ${product.price * product.quantity}</span>
+        <p>
+          Price:
+          <span
+            className={`${
+              product.discount > 0
+                ? 'line-through decoration-rose-600 decoration-2 mr-3 text-rose-600'
+                : ''
+            }`}
+          >
+            ${product.price * product.quantity}
+          </span>
+          {product.discount > 0 && (
+            <span>${product.offPrice * product.quantity}</span>
+          )}
+        </p>
         <div className="flex items-center col-start-2 bg-sky-100 justify-between w-fit space-x-5 px-3 py-2 rounded-lg mt-5">
           <div>
             {product.quantity === 1 ? (
