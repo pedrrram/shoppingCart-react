@@ -33,11 +33,14 @@ const Header: FC<HeaderProps> = () => {
           <h1 className="text-3xl font-medium">Shop</h1>
           <Navigation />
           <div className="flex items-center space-x-5">
-            <UserIcon />
+            <Link to="/login">
+              <UserIcon />
+            </Link>
             <Link to="/cart">
               <div className="relative">
                 {itemsNumber > 0 && (
                   <div className="inline-flex absolute -top-3 -right-3 justify-center items-center w-6 h-6 text-xs font-bold text-white bg-sky-500 rounded-full border-2 border-slate-900">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
                     <span>{itemsNumber}</span>
                   </div>
                 )}
