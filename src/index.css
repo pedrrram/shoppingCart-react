@@ -5,6 +5,7 @@
 .Toastify__toast-container {
   min-width: 320px !important;
   width: auto !important;
+  top: 80px !important;
 }
 .Toastify__toast-body {
   color: #0f172a;
@@ -15,7 +16,6 @@
 .Toastify__toast {
   width: 100%;
   background: #e0f2fe !important;
-  top: 80px;
   position: relative;
 }
 
@@ -26,3 +26,4 @@
 .Toastify__progress-bar--error {
   background-color: #e11d48 !important;
 }
+
