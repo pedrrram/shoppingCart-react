@@ -1,15 +1,19 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+
 import Input from '../../common/Input';
-import { Link } from 'react-router-dom';
 import Checkbox from '../../common/Checkbox';
+import { IUserSignup } from '../../types/IUserSignup';
+import { signupUSer } from '../../services/signupService';
 
 interface SignupFormProps {}
 
 const validationSchema = Yup.object({
   name: Yup.string()
-    .max(15, 'Must be 15 characters or less :(')
+    .min(6, '6 characters at least :(')
     .required('Name is Required :('),
   email: Yup.string()
     .email('Email is NOT valid :(')
@@ -18,7 +22,7 @@ const validationSchema = Yup.object({
     .required('Phone number is Required :(')
     .matches(/^[0-9]{11}$/, 'Phone number is NOT valid :('),
   password: Yup.string()
-    .min(6, '6 characters at least :(')
+    .min(8, '8 characters at least :(')
     .required('Password is Required :('),
   passwordConfirm: Yup.string()
     .required('Confirm is Required :(')
@@ -28,7 +32,38 @@ const validationSchema = Yup.object({
     .oneOf([true], 'The terms and conditions must be accepted.'),
 });
 
+interface ISignupFormValues {
+  name: string;
+  email: string;
+  phoneNumber: string;
+  password: string;
+  passwordConfirm: string;
+  terms: boolean;
+}
+
 const SignupForm: FC<SignupFormProps> = () => {
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  const onSubmit = async (values: ISignupFormValues) => {
+    const userData: IUserSignup = {
+      name: values.name,
+      email: values.email,
+      phoneNumber: values.phoneNumber,
+      password: values.password,
+    };
+    try {
+      const { data } = await signupUSer(userData);
+      setError(null);
+      navigate('/');
+    } catch (error: any) {
+      if (error.response && error.response.data.message) {
+        setError(error.response.data.message);
+        toast.error(error.response.data.message);
+      }
+    }
+  };
+
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -40,7 +75,7 @@ const SignupForm: FC<SignupFormProps> = () => {
     },
     validationSchema,
     validateOnMount: true,
-    onSubmit: (values) => console.log(values),
+    onSubmit,
   });
 
   return (
@@ -100,6 +135,9 @@ const SignupForm: FC<SignupFormProps> = () => {
         >
           Sign up
         </button>
+        {error && (
+          <div className="text-rose-600 font-light mt-2 mb-3">{error}</div>
+        )}
 
         <Link to="/login" className="w-full mt-2">
           <span className="text-sky-600 font-medium">

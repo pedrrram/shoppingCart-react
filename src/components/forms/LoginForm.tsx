@@ -1,8 +1,10 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+
 import Input from '../../common/Input';
-import { Link } from 'react-router-dom';
+import { loginUser } from '../../services/loginService';
 
 interface LoginProps {}
 
@@ -13,7 +15,27 @@ const validationSchema = Yup.object({
   password: Yup.string().required('Password is Required :('),
 });
 
+interface ILoginFormValutes {
+  email: string;
+  password: string;
+}
+
 const Login: FC<LoginProps> = () => {
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  const onSubmit = async (values: ILoginFormValutes) => {
+    try {
+      const { data } = await loginUser(values);
+      setError(null);
+      navigate('/');
+    } catch (error: any) {
+      if (error.response && error.response.data.message) {
+        setError(error.response.data.message);
+      }
+    }
+  };
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -21,7 +43,7 @@ const Login: FC<LoginProps> = () => {
     },
     validationSchema,
     validateOnMount: true,
-    onSubmit: (values) => console.log(values),
+    onSubmit,
   });
 
   return (
@@ -54,7 +76,10 @@ const Login: FC<LoginProps> = () => {
         >
           Login
         </button>
-        <Link to="/signup" className='w-full mt-2'>
+        {error && (
+          <div className="text-rose-600 font-light mt-2 mb-3">{error}</div>
+        )}
+        <Link to="/signup" className="w-full mt-2">
           <span className="text-sky-600 font-medium">
             Dont have an account? Join us
           </span>
