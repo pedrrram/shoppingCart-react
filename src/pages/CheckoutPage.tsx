@@ -60,7 +60,7 @@ const Checkout: FC<CheckoutProps> = () => {
                   <p>Cart Items</p>
                 </div>
                 {products.map((product) => (
-                  <div className="w-full flex items-center">
+                  <div key={product.id} className="w-full flex items-center">
                     <ChevronRight />
                     <div className="ml-3 flex text-lg">
                       <p className="font-medium">{product.name}</p>

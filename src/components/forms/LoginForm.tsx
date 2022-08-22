@@ -39,7 +39,6 @@ const Login: FC<LoginProps> = () => {
       const { data } = await loginUser(values);
       authDispatch({ type: AuthActionTypes.SET_USER, payload: data });
       setError(null);
-      console.log(redirect);
       navigate(`/${redirect}`);
     } catch (error: any) {
       if (error.response && error.response.data.message) {
