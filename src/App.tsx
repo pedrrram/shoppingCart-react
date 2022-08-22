@@ -11,6 +11,7 @@ import AuthProvider from './providers/auth/AuthProvider';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Profile from './pages/ProflePage';
 
 interface AppProps {}
 
@@ -25,6 +26,7 @@ const App: FC<AppProps> = () => {
             <Route path="/cart" element={<Cart />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         </div>
       </CartProvider>
