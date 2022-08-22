@@ -8,6 +8,8 @@ import Input from '../../common/Input';
 import Checkbox from '../../common/Checkbox';
 import { IUserSignup } from '../../types/IUserSignup';
 import { signupUSer } from '../../services/signupService';
+import { useAuth } from '../../providers/auth/AuthProvider';
+import { AuthActionTypes } from '../../types/AuthTypes';
 
 interface SignupFormProps {}
 
@@ -42,6 +44,7 @@ interface ISignupFormValues {
 }
 
 const SignupForm: FC<SignupFormProps> = () => {
+  const { authDispatch } = useAuth();
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -54,6 +57,7 @@ const SignupForm: FC<SignupFormProps> = () => {
     };
     try {
       const { data } = await signupUSer(userData);
+      authDispatch({ type: AuthActionTypes.SET_USER, payload: data });
       setError(null);
       navigate('/');
     } catch (error: any) {

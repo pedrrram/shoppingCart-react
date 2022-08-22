@@ -6,6 +6,7 @@ import { useCart } from '../../../providers/cart/CartProvider';
 import CartIcon from '../../icons/CartIcon';
 import HeartIcon from '../../icons/HeartIcon';
 import UserIcon from '../../icons/UserIcon';
+import { useAuth } from '../../../providers/auth/AuthProvider';
 
 interface HeaderProps {}
 
@@ -13,6 +14,7 @@ const Header: FC<HeaderProps> = () => {
   const {
     cart: { products },
   } = useCart();
+  const { userData } = useAuth();
 
   let [itemsNumber, setItemsNumber] = useState<number>(0);
   const cartCounting = () => {
@@ -33,7 +35,7 @@ const Header: FC<HeaderProps> = () => {
           <h1 className="text-3xl font-medium">Shop</h1>
           <Navigation />
           <div className="flex items-center space-x-5">
-            <Link to="/login">
+            <Link to={userData ? '/profile' : 'login'}>
               <UserIcon />
             </Link>
             <Link to="/cart">

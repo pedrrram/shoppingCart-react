@@ -5,6 +5,8 @@ import * as Yup from 'yup';
 
 import Input from '../../common/Input';
 import { loginUser } from '../../services/loginService';
+import { useAuth } from '../../providers/auth/AuthProvider';
+import { AuthActionTypes } from '../../types/AuthTypes';
 
 interface LoginProps {}
 
@@ -21,12 +23,14 @@ interface ILoginFormValutes {
 }
 
 const Login: FC<LoginProps> = () => {
+  const { authDispatch } = useAuth();
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const onSubmit = async (values: ILoginFormValutes) => {
     try {
       const { data } = await loginUser(values);
+      authDispatch({ type: AuthActionTypes.SET_USER, payload: data });
       setError(null);
       navigate('/');
     } catch (error: any) {
