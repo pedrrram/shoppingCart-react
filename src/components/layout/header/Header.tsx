@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import Navigation from '../navigation/Navigation';
+import UserSubmenu from './UserSubMenu';
 import CartIcon from '../../icons/CartIcon';
 import HeartIcon from '../../icons/HeartIcon';
 import UserIcon from '../../icons/UserIcon';
@@ -12,6 +13,7 @@ import { useAuth } from '../../../providers/auth/AuthProvider';
 interface HeaderProps {}
 
 const Header: FC<HeaderProps> = () => {
+  const [userMenu, setUserMenu] = useState(false);
   const {
     cart: { products },
   } = useCart();
@@ -35,10 +37,17 @@ const Header: FC<HeaderProps> = () => {
         <div className="flex flex-col space-y-5 sm:space-y-0 sm:flex-row justify-center items-center sm:justify-between">
           <h1 className="text-3xl font-medium">Shop</h1>
           <Navigation />
-          <div className="flex items-center space-x-5">
-            <Link to={userData ? '/profile' : '/login'}>
-              <UserIcon />
-            </Link>
+          <div className="flex items-center space-x-5 relative">
+            {!userData ? (
+              <Link to={userData ? '/profile' : '/login'}>
+                <UserIcon />
+              </Link>
+            ) : (
+              <div id="submenu" onClick={() => setUserMenu(!userMenu)}>
+                <UserIcon className="h-7 w-7 cursor-pointer" />
+                {userMenu && <UserSubmenu />}
+              </div>
+            )}
             <Link to="/cart">
               <div className="relative">
                 {itemsNumber > 0 && (
