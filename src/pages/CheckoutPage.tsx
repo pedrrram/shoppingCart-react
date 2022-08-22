@@ -1,12 +1,16 @@
 import { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import Layout from '../components/layout/Layout';
 import ChevronRight from '../components/icons/ChevronRight';
 import MailIcon from '../components/icons/MailIcon';
 import PhoneIcon from '../components/icons/PhoneIcon';
 import UserIcon from '../components/icons/UserIcon';
-import Layout from '../components/layout/Layout';
+
 import { useAuth } from '../providers/auth/AuthProvider';
 import { useCart } from '../providers/cart/CartProvider';
+
+import { totalDiscountedPrice } from '../utils/totalDiscountedPrice';
 
 interface CheckoutProps {}
 
@@ -22,6 +26,8 @@ const Checkout: FC<CheckoutProps> = () => {
       navigate('/');
     }
   }, [userData, products]);
+
+  const totalDiscounted = totalDiscountedPrice(products);
 
   return (
     <Layout>
@@ -65,13 +71,7 @@ const Checkout: FC<CheckoutProps> = () => {
                   </div>
                 ))}
                 <div className="text-xl flex space-x-3 text-left font-thin pt-3 border-t-2 border-dashed border-slate-200">
-                  <p>
-                    Total: $
-                    {products.reduce(
-                      (sum, pr) => sum + pr.offPrice * pr.quantity,
-                      0
-                    )}
-                  </p>
+                  <p>Total: ${totalDiscounted}</p>
                 </div>
               </div>
             </div>

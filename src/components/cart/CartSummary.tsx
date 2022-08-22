@@ -4,19 +4,16 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../providers/auth/AuthProvider';
 import { useCart } from '../../providers/cart/CartProvider';
 
+import { totalDiscountedPrice } from '../../utils/totalDiscountedPrice';
+
 interface CartSummaryProps {}
 
 const CartSummary: FC<CartSummaryProps> = () => {
   const {
     cart: { products, total },
   } = useCart();
-
   const { userData } = useAuth();
-
-  const discountedTotal: number = products.reduce(
-    (sum, pr) => sum + pr.offPrice * pr.quantity,
-    0
-  );
+  const totalDiscounted = totalDiscountedPrice(products);
 
   return (
     <section className="sm:col-span-2 shadow-2xl bg-sky-100 rounded-2xl max-h-[440px] overflow-hidden">
@@ -31,13 +28,13 @@ const CartSummary: FC<CartSummaryProps> = () => {
           <p>
             Discount:
             <span className="ml-3 font-semibold">
-              ${total - discountedTotal}
+              ${total - totalDiscounted}
             </span>
           </p>
         </div>
         <p className="font-medium text-2xl py-3">
           Total:
-          <span className="ml-3 font-bold text-xl">${discountedTotal}</span>
+          <span className="ml-3 font-bold text-xl">${totalDiscounted}</span>
         </p>
         <Link to={userData ? '/checkout' : '/login?redirect=checkout'}>
           <button className="bg-sky-600 text-white py-3 rounded-xl mt-5 font-medium w-full">
