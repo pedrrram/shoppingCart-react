@@ -2,6 +2,7 @@ import { Dispatch } from 'react';
 
 export enum AuthActionTypes {
   SET_USER = 'SET_USER',
+  LOGOUT_USER = 'LOGOUT_USER'
 }
 
 export interface IUserData {
