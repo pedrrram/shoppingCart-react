@@ -1,5 +1,5 @@
-import { FC, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { FC, useEffect, useState } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -23,16 +23,24 @@ interface ILoginFormValutes {
 }
 
 const Login: FC<LoginProps> = () => {
-  const { authDispatch } = useAuth();
+  const [searchParams] = useSearchParams();
+  const redirect = searchParams.get('redirect') || '';
+
+  const { userData, authDispatch } = useAuth();
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (userData) navigate('/');
+  }, [userData, redirect]);
 
   const onSubmit = async (values: ILoginFormValutes) => {
     try {
       const { data } = await loginUser(values);
       authDispatch({ type: AuthActionTypes.SET_USER, payload: data });
       setError(null);
-      navigate('/');
+      console.log(redirect);
+      navigate(`/${redirect}`);
     } catch (error: any) {
       if (error.response && error.response.data.message) {
         setError(error.response.data.message);
@@ -83,7 +91,10 @@ const Login: FC<LoginProps> = () => {
         {error && (
           <div className="text-rose-600 font-light mt-2 mb-3">{error}</div>
         )}
-        <Link to="/signup" className="w-full mt-2">
+        <Link
+          to={redirect ? `/signup?redirect=${redirect}` : '/signup'}
+          className="w-full mt-2"
+        >
           <span className="text-sky-600 font-medium">
             Dont have an account? Join us
           </span>

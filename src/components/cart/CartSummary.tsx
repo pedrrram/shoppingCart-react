@@ -1,5 +1,7 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
+
+import { useAuth } from '../../providers/auth/AuthProvider';
 import { useCart } from '../../providers/cart/CartProvider';
 
 interface CartSummaryProps {}
@@ -8,6 +10,8 @@ const CartSummary: FC<CartSummaryProps> = () => {
   const {
     cart: { products, total },
   } = useCart();
+
+  const { userData } = useAuth();
 
   const discountedTotal: number = products.reduce(
     (sum, pr) => sum + pr.offPrice * pr.quantity,
@@ -35,7 +39,7 @@ const CartSummary: FC<CartSummaryProps> = () => {
           Total:
           <span className="ml-3 font-bold text-xl">${discountedTotal}</span>
         </p>
-        <Link to="/checkout">
+        <Link to={userData ? '/checkout' : '/login?redirect=checkout'}>
           <button className="bg-sky-600 text-white py-3 rounded-xl mt-5 font-medium w-full">
             Checkout
           </button>

@@ -1,15 +1,15 @@
-import { FC, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { FC, useEffect, useState } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 import Input from '../../common/Input';
 import Checkbox from '../../common/Checkbox';
+import { AuthActionTypes } from '../../types/AuthTypes';
 import { IUserSignup } from '../../types/IUserSignup';
 import { signupUSer } from '../../services/signupService';
 import { useAuth } from '../../providers/auth/AuthProvider';
-import { AuthActionTypes } from '../../types/AuthTypes';
 
 interface SignupFormProps {}
 
@@ -44,9 +44,16 @@ interface ISignupFormValues {
 }
 
 const SignupForm: FC<SignupFormProps> = () => {
-  const { authDispatch } = useAuth();
+  const [searchParams] = useSearchParams();
+  const redirect = searchParams.get('redirect') || '';
+
+  const { userData, authDispatch } = useAuth();
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (userData) navigate('/');
+  }, [redirect, userData]);
 
   const onSubmit = async (values: ISignupFormValues) => {
     const userData: IUserSignup = {
@@ -59,7 +66,7 @@ const SignupForm: FC<SignupFormProps> = () => {
       const { data } = await signupUSer(userData);
       authDispatch({ type: AuthActionTypes.SET_USER, payload: data });
       setError(null);
-      navigate('/');
+      navigate(`/${redirect}`);
     } catch (error: any) {
       if (error.response && error.response.data.message) {
         setError(error.response.data.message);
@@ -143,7 +150,10 @@ const SignupForm: FC<SignupFormProps> = () => {
           <div className="text-rose-600 font-light mt-2 mb-3">{error}</div>
         )}
 
-        <Link to="/login" className="w-full mt-2">
+        <Link
+          to={redirect ? `/login?redirect=${redirect}` : '/login'}
+          className="w-full mt-2"
+        >
           <span className="text-sky-600 font-medium">
             have an account? Log in
           </span>
