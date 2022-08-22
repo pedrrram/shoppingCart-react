@@ -5,13 +5,14 @@ import Home from './pages/HomePage';
 import Cart from './pages/CartPage';
 import Login from './pages/LoginPage';
 import Signup from './pages/SignupPage';
+import Profile from './pages/ProflePage';
+import Checkout from './pages/CheckoutPage';
 
 import CartProvider from './providers/cart/CartProvider';
 import AuthProvider from './providers/auth/AuthProvider';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Profile from './pages/ProflePage';
 
 interface AppProps {}
 
@@ -27,6 +28,7 @@ const App: FC<AppProps> = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/checkout" element={<Checkout />} />
           </Routes>
         </div>
       </CartProvider>
